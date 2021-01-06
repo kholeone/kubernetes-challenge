@@ -1,0 +1,157 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-one
+  labels:
+    app: service-one
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: service-one
+  template:
+    metadata:
+      labels:
+        app: service-one
+    spec:
+      containers:
+        - name: service-one
+          image: kholeone/service-one:latest
+          ports:
+          - name: service-one-port
+            containerPort: 5000
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-two
+  labels:
+    app: service-two
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: service-two
+  template:
+    metadata:
+      labels:
+        app: service-two
+    spec:
+      containers:
+        - name: service-two
+          image: kholeone/service-two:latest   
+          ports:
+          - name: service-two-port
+            containerPort: 5001
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-three
+  labels:
+    app: service-three
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: service-three
+  template:
+    metadata:
+      labels:
+        app: service-three
+    spec:
+      containers:
+        - name: service-three
+          image: kholeone/service-three:latest 
+          ports:
+          - name: service-three-port
+            containerPort: 5002
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-four
+  labels:
+    app: service-four
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: service-four
+  template:
+    metadata:
+      labels:
+        app: service-four
+    spec:
+      containers:
+        - name: service-four
+          image: kholeone/service-four:latest 
+          ports:
+          - name: service-four-port
+            containerPort: 5003
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-one
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 5000
+  selector:
+    app: service-one
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-two
+spec:
+  selector:
+    app: service-two
+  ports: 
+  - protocol: TCP
+    port: 5001
+    targetPort: 5001
+  type: ClusterIP
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-three
+spec:
+  selector:
+    app: service-three
+  ports:
+  - protocol: TCP
+    port: 5002
+    targetPort: 5002
+  type: ClusterIP
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-four
+spec:
+  selector:
+    app: service-four
+  ports:
+  - protocol: TCP
+    port: 5003
+    targetPort: 5003
+  type: ClusterIP
+
