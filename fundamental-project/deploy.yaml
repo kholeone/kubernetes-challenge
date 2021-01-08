@@ -20,7 +20,9 @@ spec:
         ports:
         - name: app-port 
         - containerPort: 5000
-
+        env:
+        - name: DATABASE_URI
+          value: "mysql+pymysql://root:root@mysql:3306/listing"
 ---
 
 apiVersion: v1
